@@ -6,6 +6,7 @@ import Profile from './pages/Profile'
 import SignIn from './pages/Signin'
 import SignUp from './pages/SignUp'
 import Header from './components/Header'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/about' element={<About/>}/>
         </Routes>
+        <Footer></Footer>
       </BrowserRouter>
     </div>
   )
