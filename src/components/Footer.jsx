@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Footer() {
   return (
-     <div className='d-flex justify-content-center align-items-center flex-column text-light p-4 py-5 mt-0 bg-red-800'>
+     <div className='d-flex justify-content-center align-items-center flex-column text-light p-4 py-5 mt-0 bg-slate-900'>
     <div className='footer-content d-flex justify-content-evenly w-100 flex-wrap'>
       <div style={{width:'400px'}} className='website'>
         <h4 className='text-violet-200'><Link to='/' className='text-decoration-none'><span className='text-violet-200 text-2xl'><i className="fa-solid fa-house" style={{color:"#B197FC"}}></i><b> Dream</b></span><span className='text-violet-400 text-2xl'><b>Home</b></span></Link></h4>
@@ -28,7 +28,7 @@ function Footer() {
           <h4 className='text-violet-200'>Contact Us</h4>
           <div className='d-flex'>
                 <input type="text" className='form-control' placeholder='Enter your mail'/>
-                <button className='btn btn-warning ms-3'><i className='fa-solid fa-arrow-right fa-beat'></i></button>
+                <button className='btn btn-danger ms-3'><i className='fa-solid fa-arrow-right fa-beat'></i></button>
           </div>
           <div className='icons mt-3 d-flex justify-content-between fs-5 '>
                 <Link to={'https://getbootstrap.com/'} className='text-violet-400 text-decoration-none'><i className='fa-brands fa-linkedin-in'></i></Link>
@@ -41,7 +41,7 @@ function Footer() {
           </div>
       </div>
     </div>
-    <div className=' pt-4 text-violet-200 text-decoration-none'>Copyright @ 2024 Daily Cart. Built with React</div>
+    <div className=' pt-4 text-violet-200 text-decoration-none'>Copyright @ 2024  <i className="fa-solid fa-house" style={{color:"#B197FC"}}></i> Dream<span className='text-violet-400'>Home</span>. Built with React.</div>
   </div>
   )
 }

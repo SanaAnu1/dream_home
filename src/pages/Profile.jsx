@@ -1,5 +1,6 @@
 import React from 'react'
 import pr from '../assets/prr.png'
+import { Link } from 'react-router-dom'
 
 function Profile() {
   return (
@@ -16,7 +17,7 @@ function Profile() {
               <input type="text" placeholder='email' className='border p-2 rounded-lg'/>
               <input type="text" placeholder='password' className='border p-2 rounded-lg'/>
               <button className='bg-violet-500 text-white p-2 rounded hover:opacity-80'>Update</button>
-              <button  className='bg-violet-800 text-white rounded p-2 hover:opacity-80'>Create Listing</button>
+              <Link to={'/create-listing'}  className='bg-violet-800 text-white rounded p-2 hover:opacity-80 text-center'><button >Create Listing</button></Link>
             </form>
             <div className='d-flex justify-content-center align-items-center p-1'>
               <p className='text-red-700'>Delete Account</p>
