@@ -44,6 +44,9 @@ function Home() {
           </Carousel.Item>
         </Carousel>
          </div>
+         <div>
+         <Link to={'/search'}><h5 className='px-3 pt-3 text-center' style={{textDecoration:'none'}}>Let's find your DreamHome by clicking here</h5></Link>
+         </div>
          <div className='p-4'>
           <h5>Recent Places For Rent</h5>
           <Link to={'/search'}><p>Show more..</p></Link>
