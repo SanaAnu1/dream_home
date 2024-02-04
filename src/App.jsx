@@ -9,7 +9,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import CreateListing from './pages/CreateListing'
 import Listing from './pages/Listing'
-
+import Search from './pages/Search'
 
 function App() {
   return (
@@ -24,6 +24,8 @@ function App() {
         <Route path='/about' element={<About/>}/>
         <Route path='/create-listing' element={<CreateListing/>}/>
         <Route path='/listing/:listingId' element={<Listing/>}/>
+        <Route path='/search' element={<Search/>}/>
+        <Route path='/*' element={<Home/>}/>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>

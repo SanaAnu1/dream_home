@@ -46,8 +46,7 @@ function Home() {
          </div>
          <div className='p-4'>
           <h5>Recent Places For Rent</h5>
-          <a href="">Show more..</a>
-
+          <Link to={'/search'}><p>Show more..</p></Link>
           <Link to='/listing/1' className='text-decoration-none'>
             <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={v4} />
@@ -66,7 +65,7 @@ function Home() {
          </div>
          <div className='p-4'>
          <h5>Recent Places For Sale</h5>
-         <a href="">Show more..</a>
+         <Link to={'/search'}><p>Show more..</p></Link>
           <Link to='/listing/1' className='text-decoration-none'>
             <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={v4} />
