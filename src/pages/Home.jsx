@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import v1 from '../assets/v1.jpg'
 import Carousel from 'react-bootstrap/Carousel';
 import v3 from '../assets/v3.jpg'
@@ -7,8 +7,34 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import v4 from '../assets/v4.jpg'
 import { Link } from 'react-router-dom';
+import ListingItem from '../components/ListingItem';
 
 function Home() {
+  const [saleListings,setSaleListings]=useState([])
+  const [rentListings,setRentListings]=useState([])
+  useEffect(()=>{
+    const fetchRentListings=async()=>{
+      try {
+        const res=await fetch('/api/listing/get?type=rent&limit=3')
+        const data=await res.json()
+        setRentListings(data)
+        fetchSaleListing()
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    const fetchSaleListing=async()=>{
+      try {
+        const res=await fetch('/api/listing/get?type=sale&limit=3')
+        const data=await res.json()
+        setSaleListings(data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchRentListings()
+  },[])
+
   return (
     <div className='pt-5 mt-2'>
          <div id='carousal'>
@@ -44,49 +70,50 @@ function Home() {
           </Carousel.Item>
         </Carousel>
          </div>
-         <div>
-         <Link to={'/search'}><h5 className='px-3 pt-3 text-center' style={{textDecoration:'none'}}>Let's find your DreamHome by clicking here</h5></Link>
+         <div className='im flex justify-center items-center '>
+         <h3 className='px-3 text-center ' style={{textDecoration:'none'}}>Let's find your DreamHome by clicking <Link to={'/search'}>here</Link></h3>
          </div>
-         <div className='p-4'>
-          <h5>Recent Places For Rent</h5>
-          <Link to={'/search'}><p>Show more..</p></Link>
-          <Link to='/listing/1' className='text-decoration-none'>
-            <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={v4} />
-        <Card.Body>
-          <Card.Title>ABCD Villa</Card.Title>
-          <Card.Text>
-          <p><i className="fa-solid fa-location-dot fa-sm" style={{color: '#058703'}}></i><span className='ms-2'>Rfg JK Lane, Thrissur</span></p>
-  
-          This cozy 2-bedroom, 1-bathroom cottage is the perfect place to call home. Ideal for couples or small families.
-          
-          <p><b>2 bed   2 bathroom</b></p>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-          </Link>
-         </div>
-         <div className='p-4'>
-         <h5>Recent Places For Sale</h5>
-         <Link to={'/search'}><p>Show more..</p></Link>
-          <Link to='/listing/1' className='text-decoration-none'>
-            <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={v4} />
-        <Card.Body>
-          <Card.Title>ABCD Villa</Card.Title>
-          <Card.Text>
-          <p><i className="fa-solid fa-location-dot fa-sm" style={{color: '#058703'}}></i><span className='ms-2'>Rfg JK Lane, Thrissur</span></p>
-  
-          This cozy 2-bedroom, 1-bathroom cottage is the perfect place to call home. Ideal for couples or small families.
-          
-          <p><b>2 bed   2 bathroom</b></p>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-          </Link>
-         </div>
+         <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+            {saleListings&&saleListings.length>0&&(
+              <div>
+                <div className="my-3">
+                  <h2 className="text-2xl font-semibold text-slate-600">
+                    Recent Places For Sale
+                  </h2>
+                  <Link to={'/search?type=sale'} style={{textDecoration:'none'}} className='text-sm text-blue-700 hover:underline'>
+                      Show more
+                  </Link>
+                </div>
+                <div className='flex flex-wrap gap-4'>
+                  {saleListings.map((listing)=>(
+                    <ListingItem listing={listing} key={listing._id}></ListingItem>
+                  ))}
+                </div>
+              </div>
+             
+            )}
+          </div>
 
-         
+          <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+            {rentListings&&rentListings.length>0&&(
+              <div>
+                <div className="my-3">
+                  <h2 className="text-2xl font-semibold text-slate-600">
+                    Recent Places For Rent
+                  </h2>
+                  <Link to={'/search?type=rent'} style={{textDecoration:'none'}} className='text-sm text-blue-700 hover:underline'>
+                      Show more
+                  </Link>
+                </div>
+                <div className='flex flex-wrap gap-4'>
+                  {rentListings.map((listing)=>(
+                    <ListingItem listing={listing} key={listing._id}></ListingItem>
+                  ))}
+                </div>
+              </div>
+             
+            )}
+          </div>
     </div>
   )
 }

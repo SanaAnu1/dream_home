@@ -1,13 +1,14 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { app } from '../firebase'
 import { useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-function CreateListing() {
+function UpdateListing(){
+    const params=useParams()
     const {currentUser}=useSelector(state=>state.user)
     const navigate=useNavigate()
     const [files,setFiles]=useState([])
@@ -16,6 +17,21 @@ function CreateListing() {
     const [uploading,setUploading]=useState(false)
     const [error,setError]=useState(false)
     const [loading,setLoading]=useState(false)
+    
+    useEffect(()=>{
+        const fetchListing=async()=>{
+            const listingId=params.listingId
+            const res=await fetch(`/api/listing/get/${listingId}`)
+            const data=await res.json()
+            if(data.success===false){
+                console.log(data.message)
+                return
+            }
+            setFormData(data)
+        }
+        fetchListing()
+    },[])
+
 
     const handleImageSubmit=(e)=>{
         if(files.length>0 && files.length+formData.imageUrls.length<7 ){
@@ -98,7 +114,7 @@ function CreateListing() {
             }
             setLoading(true)
             setError(false)
-            const res=await fetch('/api/listing/create',{
+            const res=await fetch(`/api/listing/update/${params.listingId}`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -124,7 +140,7 @@ function CreateListing() {
   return (
     <div className='bg-slate-100'>
         <main className='p-3 mt-5 max-w-4xl mx-auto bg-slate-100'>
-            <h2 className='text-3xl text-center font-semibold my-7'>Create a Listing</h2>
+            <h2 className='text-3xl text-center font-semibold my-7'>Update Listing</h2>
             <form className='flex flex-col sm:flex-row gap-4'>
                     <div className='flex flex-col gap-3 flex-1'>
                         <input onChange={handleChange} value={formData.name} type="text" placeholder='Name' className='border p-3 rounded-lg' id='name' maxLength='62' minLength='5' required />
@@ -188,7 +204,7 @@ function CreateListing() {
                                <span onClick={()=>handleRemoveImage(index)} type='button' className='hover:opacity-70'><i className="fa-solid fa-trash fa-xl pt-3" style={{color: "#b90404"}}></i></span>
                             </div>
                         ))}
-                        <button onClick={handleSubmit} disabled={loading || uploading}  className='p-2 bg-slate-700 text-white rounded-lg hover:opacity-85'>{loading?'Creating...':'Create Listing'}</button>
+                        <button onClick={handleSubmit} disabled={loading || uploading}  className='p-2 bg-slate-700 text-white rounded-lg hover:opacity-85'>{loading?'Updating...':'Update Listing'}</button>
                         {error&&<p className='text-red-700 text-sm'>{error}</p>}
                     </div>
             </form>
@@ -198,4 +214,4 @@ function CreateListing() {
   )
 }
 
-export default CreateListing
+export default UpdateListing
